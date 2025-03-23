@@ -2,7 +2,9 @@
 
 ## Description
 This is a project for those who want to just stream their screen to their friends with their usual OBS settings straight from OBS itself. This also has a password/token protection.  
-You need to specify tn in `nginx.conf` at the line:
+
+# Token protection setup
+You need to specify the token in `nginx.conf` at the line:  
 ```
 if ($http_authorization != "YOUR_SECRET_TOKEN") {
 ```
@@ -15,7 +17,9 @@ Then you simply need to go to your settings, the broadcasting tab, select a Cust
 > **Server**: `rtmp://127.0.0.1/live` (if you're streaming from the same device that has the Docker container)  
 > **Key**: `test` (unless you want to change it in the project files)  
 
-### Stream creation permissions
+### Stream creation protection
+To not let everyone stream on the service, you either need to have a list of allowed IPs that can publish streams, or to keep the RTMP server **not port-forwarded** on your router.
+
 There are a few lines in the `nginx.conf` file:
 In the `rtmp.server` section:
 
@@ -28,7 +32,7 @@ This allows to start a stream only from this address. It can differ on your devi
 
 ### Ports to open on your router
 
-You only need to open the Frontend's port, which is 5220 by default
+You **only need to open the Frontend's port**, which is 5220 by default
 
 ## Installation
 
