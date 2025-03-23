@@ -1,0 +1,32 @@
+services:
+  nginx-rtmp:
+    image: my-nginx-rtmp
+    container_name: nginx-rtmp-container
+    ports:
+      - "1935:1935"
+      - "5900:8000"
+    networks:
+      rtmp-net:
+        ipv4_address: 172.20.0.2
+    restart: unless-stopped
+  rtmp-frontend:
+    image: stream-share-frontend
+    container_name: frontend-rtmp-container
+    depends_on:
+      - nginx-rtmp
+    environment:
+      VITE_APP_ENV: production
+      VUE_APP_RTMP_HOST: 172.20.0.2
+      VUE_APP_RTMP_PORT: 8000
+    ports:
+      - "5220:5220"
+    networks:
+      rtmp-net:
+        ipv4_address: 172.20.0.3
+
+networks:
+  rtmp-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
