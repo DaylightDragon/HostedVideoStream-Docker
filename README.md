@@ -1,5 +1,14 @@
 # Hosting an own video stream (Docker and the server)
 
+## Description
+This is a project for those who want to just stream their screen to their friends with their usual OBS settings straight from OBS itself. This also has a password/token protection.  
+You need to specify tn in `nginx.conf` at the line:
+```
+if ($http_authorization != "YOUR_SECRET_TOKEN") {
+```
+
+Where you can put absolutely any character combination as a token. It serves as some basic protection from random people, so you can be sure the stream isn't being watched by random web scanner bots (idk) or someone who just knows your IP and the port. Additionally you can change the port in the `compose.yml` file.
+
 ## Installation
 
 (You can change .bat files to .sh files and remove the "@echo off" in the beginning for linux support)  
