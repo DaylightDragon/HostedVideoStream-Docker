@@ -11,7 +11,7 @@ Where you can put absolutely any character combination as a token. It serves as 
 
 ### Setting up your OBS:
 First, consider creating a new OBS profile and/or the scenes collection to split all settings from your usual ones. (Those are found on the top bar)  
-Then you simply need to go to your settings, the broadcasting tab, select a Custom service and specify these parameters:
+Then you simply need to go to your settings, the broadcasting tab, select a Custom service and specify these parameters:  
 Server: `rtmp://127.0.0.1/live` (if you're streaming from the same device that has the Docker container)
 Key: `test` (unless you want to change it in the project files)
 
