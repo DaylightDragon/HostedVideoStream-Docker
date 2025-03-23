@@ -9,9 +9,35 @@ if ($http_authorization != "YOUR_SECRET_TOKEN") {
 
 Where you can put absolutely any character combination as a token. It serves as some basic protection from random people, so you can be sure the stream isn't being watched by random web scanner bots (idk) or someone who just knows your IP and the port. Additionally you can change the port in the `compose.yml` file.
 
+### Setting up your OBS:
+First, consider creating a new OBS profile and/or the scenes collection to split all settings from your usual ones. (Those are found on the top bar)  
+Then you simply need to go to your settings, the broadcasting tab, select a Custom service and specify these parameters:
+Server: `rtmp://127.0.0.1/live` (if you're streaming from the same device that has the Docker container)
+Key: `test` (unless you want to change it in the project files)
+
+### Stream creation permissions
+There are a few lines in the `Docker repository's` nginx.conf:
+In the `rtmp.server` section:
+
+```nginx configuration
+allow publish 172.20.0.1;
+deny publish all;
+```
+
+This allows to start a stream only from this address. It can differ on your device (though probably not), so either check it **or just delete these two lines** since the STMP server is **already hidden from outside** by the design.
+
+### Ports to open on your router
+
+You only need to open the Frontend's port, which is 5220 by default
+
 ## Installation
 
 (You can change .bat files to .sh files and remove the "@echo off" in the beginning for linux support)  
+
+0. I don't remember if this is required, but maybe create a docker network in the beginning:
+```sh
+docker network create --subnet=172.20.0.0/16 rtmp-net
+```
 
 1. Create the RTMP server image with own settings:  
 ```sh
@@ -41,10 +67,5 @@ Where you can put absolutely any character combination as a token. It serves as 
 .\resetCotnainer.bat
 ```
 
-
-### Additionally
-
-Also, by the way, I don't remember if this is required, but if you're having troubles consider creating the network in the beginning:
-```sh
-docker network create --subnet=172.20.0.0/16 rtmp-net
-```
+## Important note
+There is unique info in both repositories, so read through both of them to not have questions.
